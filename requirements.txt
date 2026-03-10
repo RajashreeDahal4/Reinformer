@@ -2,4 +2,7 @@
 torch
 transformers
 onnx
+onnxruntime
+# onnxruntime-gpu  # optional: for GPU runtime measurement (install separately if you have CUDA)
 dataclasses-json>=0.6.0
+numpy
