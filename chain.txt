@@ -1,5 +1,5 @@
-python3 bert_onnx_pipeline.py export --onnx bert.onnx --graph graph_bert_onnx.json
-python3 bert_onnx_pipeline.py optimize --onnx bert.onnx --out-optimized bert_optimized.onnx --out-fusion fusion_groups.json
-python3 bert_onnx_pipeline.py extract --onnx bert_optimized.onnx --output graph_bert_optimized.json
-python3 measure_bert_runtimes.py --cpu-only --onnx bert_optimized.onnx --graph graph_bert_optimized.json --output graph_bert_optimized.json
-python3 measure_bert_runtimes.py --gpu-only --onnx bert_optimized.onnx --graph graph_bert_optimized.json --output graph_bert_optimized.json
+python bert_onnx_pipeline.py export --onnx bert.onnx --graph graph_bert_onnx.json
+python bert_onnx_pipeline.py optimize --onnx bert.onnx --out-optimized bert_optimized.onnx --out-fusion fusion_groups.json
+python bert_onnx_pipeline.py extract --onnx bert_optimized.onnx --output graph_bert_optimized.json
+python measure_bert_runtimes.py --cpu-only --onnx bert_optimized.onnx --graph graph_bert_optimized.json --output graph_bert_optimized.json
+python measure_bert_runtimes.py --gpu-only --onnx bert_optimized.onnx --graph graph_bert_optimized.json --output graph_bert_optimized.json
