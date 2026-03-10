@@ -1,0 +1,48 @@
+{
+    "schema_version": 1,
+    "id": "node0",
+    "host_memory_capacity": 34359738368,
+    "devices": [
+      {
+        "id": "cpu:0",
+        "type": "cpu",
+        "memory_capacity": 17179869184,
+        "compute_speed_factor": 1.0
+      },
+      {
+        "id": "gpu:0",
+        "type": "gpu",
+        "memory_capacity": 8589934592,
+        "compute_speed_factor": 1.0
+      },
+      {
+        "id": "gpu:1",
+        "type": "gpu",
+        "memory_capacity": 8589934592,
+        "compute_speed_factor": 1.0
+      }
+    ],
+    "links": [
+      {
+        "id": "cpu0-gpu0",
+        "src_device_id": "cpu:0",
+        "dst_device_id": "gpu:0",
+        "bandwidth": 12.0,
+        "latency": 1e-6
+      },
+      {
+        "id": "cpu0-gpu1",
+        "src_device_id": "cpu:0",
+        "dst_device_id": "gpu:1",
+        "bandwidth": 12.0,
+        "latency": 1e-6
+      },
+      {
+        "id": "gpu0-gpu1",
+        "src_device_id": "gpu:0",
+        "dst_device_id": "gpu:1",
+        "bandwidth": 50.0,
+        "latency": 1e-6
+      }
+    ]
+  }

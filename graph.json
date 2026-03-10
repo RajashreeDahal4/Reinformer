@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "ops": [
+    {
+      "id": "op1",
+      "name": "input_layer",
+      "device_id": "gpu:0",
+      "dependencies": [],
+      "runtime_on_device": {
+        "gpu:0": 0.002
+      },
+      "memory_footprint": 134217728,
+      "persistent_memory": 268435456,
+      "output_tensors": [
+        {
+          "id": "t1",
+          "size_bytes": 67108864
+        }
+      ]
+    },
+    {
+      "id": "op2",
+      "name": "hidden_layer",
+      "device_id": "gpu:1",
+      "dependencies": ["op1"],
+      "runtime_on_device": {
+        "gpu:1": 0.003
+      },
+      "memory_footprint": 134217728,
+      "persistent_memory": 268435456,
+      "output_tensors": [
+        {
+          "id": "t2",
+          "size_bytes": 67108864
+        }
+      ]
+    },
+    {
+      "id": "op3",
+      "name": "output_layer",
+      "device_id": "cpu:0",
+      "dependencies": ["op2"],
+      "runtime_on_device": {
+        "cpu:0": 0.005
+      },
+      "memory_footprint": 67108864,
+      "persistent_memory": 0.0,
+      "output_tensors": []
+    }
+  ]
+}
