@@ -6,13 +6,10 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
-# Make "sim/io_api.py" importable when this file is placed at repo root
 REPO_ROOT = Path(__file__).resolve().parent
 SIM_DIR = REPO_ROOT / "sim"
 if str(SIM_DIR) not in sys.path:
     sys.path.insert(0, str(SIM_DIR))
-
-from io_api import simulate_from_files, simulation_result_to_dict  
 
 
 def _safe_div(a: float, b: float) -> float:
@@ -162,5 +159,6 @@ def compute_runtime_coverage_metrics(
         "gpu_runtime_seconds_p95": _quantile(gpu_runtimes_sorted, 0.95),
         "cpu_over_gpu_ratio_mean": statistics.mean(cpu_gpu_ratios) if cpu_gpu_ratios else 0.0,
         "cpu_over_gpu_ratio_median": statistics.median(cpu_gpu_ratios) if cpu_gpu_ratios else 0.0,
+        "cpu_over_gpu_ratio_p95": _quantile(ratios_sorted, 0.95),
         "cpu_over_gpu_ratio_min": min(cpu_gpu_ratios) if cpu_gpu_ratios else 0.0,
-        "cpu_over_gpu_ratio_max": max(cpu_gpu_ratios) if cpu_gpu_ratios else 0.0,}
+        "cpu_over_gpu_ratio_max": max(cpu_gpu_ratios) if cpu_gpu_ratios else 0.0}
