@@ -3,3 +3,4 @@ __pycache__/
 *.onnx
 *.dot
 myenv/
+sim/tf_to_sim.py
