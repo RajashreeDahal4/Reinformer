@@ -11,6 +11,7 @@ from typing import Any, Dict, List
 from graph import ComputationGraph, Op, TensorSpec
 from hardware import Device, DeviceType, Link, Node
 from scheduler import SimulationResult, Simulator
+from pathlib import Path
 
 
 def _build_node_from_config(config: Dict[str, Any]) -> Node:
@@ -104,6 +105,25 @@ def simulate_from_files(hardware_config_path: str, graph_path: str) -> Simulatio
     }
 
     return simulate(config)
+
+
+def load_config_from_files(hardware_config_path: str, graph_path: str):
+    parent_dir_path = Path(__file__).resolve().parent
+    hardware_config_path = parent_dir_path / hardware_config_path
+    graph_path = parent_dir_path / graph_path
+
+    with open(hardware_config_path, "r", encoding="utf-8") as f:
+        hw = json.load(f)
+
+    with open(graph_path, "r", encoding="utf-8") as f:
+        gr = json.load(f)
+
+    config: Dict[str, Any] = {
+        "schema_version": 1,
+        "hardware_config": hw,
+        "graph": gr,
+    }
+    return config
 
 
 def simulation_result_to_dict(result: SimulationResult) -> Dict[str, Any]:

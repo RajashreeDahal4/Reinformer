@@ -14,14 +14,14 @@ from torchrl.envs import EnvBase
 from torchrl.envs.common import EnvBase
 from torchrl.envs.utils import check_env_specs, make_composite_from_td
 
-from sim.io_api import _build_graph_from_config, _build_node_from_config
-from sim.scheduler import Simulator
+from io_api import _build_graph_from_config, _build_node_from_config
+from scheduler import Simulator
 
 
 class SimEnv(EnvBase):
     batch_locked = False
 
-    def __init__(self, config: Dict[str, Any], device=None):
+    def __init__(self, config: Dict[str, Any], seed=None, device=None):
         self.config = config
 
         self.device_ids: list = []
@@ -37,6 +37,9 @@ class SimEnv(EnvBase):
         td_params = self.gen_params(self.num_devices, self.num_ops, device=device)
         super().__init__(device=device)
         self._make_spec(td_params)
+        if seed is None:
+            seed = torch.empty((), dtype=torch.int64).random_().item()
+        self._set_seed(seed)
 
     def _step(self, tensordict):
         # TODO: make sure out has all the same keys as tensordict, and that the shape is correct
@@ -59,6 +62,7 @@ class SimEnv(EnvBase):
             {
                 "action": action,
                 "params": tensordict["params"],
+                "observation": result.total_runtime,
                 "reward": reward,
                 "done": torch.tensor(True),
             },
@@ -74,12 +78,18 @@ class SimEnv(EnvBase):
             # if no ``tensordict`` is passed, we generate a single set of hyperparameters
             # Otherwise, we assume that the input ``tensordict`` contains all the relevant
             # parameters to get started.
-            tensordict = self.gen_params(batch_size=batch_size, device=self.device)
+            tensordict = self.gen_params(
+                self.num_devices,
+                self.num_ops,
+                batch_size=batch_size,
+                device=self.device,
+            )
         action = torch.rand(tensordict.shape, generator=self.rng, device=self.device)
         out = TensorDict(
             {
                 "action": action,
                 "params": tensordict["params"],
+                "observation": torch.zeros(tensordict.shape, device=self.device),
             },
             tensordict.shape,
         )
@@ -87,7 +97,7 @@ class SimEnv(EnvBase):
 
     def _make_spec(self, td_params):
         self.observation_spec = Composite(
-            total_runtime=UnboundedContinuous(
+            observation=UnboundedContinuous(
                 shape=(1,),
                 dtype=torch.float32,
             ),
@@ -99,12 +109,17 @@ class SimEnv(EnvBase):
 
         self.state_spec = self.observation_spec.clone()
 
-        self.action_spec = OneHot(n=self.num_devices, shape=(self.num_ops))
+        self.action_spec = OneHot(
+            n=self.num_devices, shape=(self.num_ops, self.num_devices)
+        )
 
         self.reward_spec = UnboundedContinuous(
             shape=(*td_params.shape, 1),
             dtype=torch.float32,
         )
+
+    def _set_seed(self, seed):
+        self.rng = torch.random.manual_seed(seed)
 
     @staticmethod
     def gen_params(
