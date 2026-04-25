@@ -11,6 +11,9 @@ Prerequisites: ONNX and graph JSON from bert_onnx_pipeline.py (export or extract
 
 Usage:
   python measure_bert_runtimes.py [--onnx bert.onnx] [--graph graph_bert_onnx.json] [--output ...] [--cpu-only] [--gpu-only]
+ 
+python measure_bert_runtimes.py --random --graph graph_bert_optimized.json --output graph_bert_onnx_random.json  ( # Default: randomly assigns each op to cpu:0 or gpu:0)
+
 """
 from __future__ import annotations
 
@@ -21,6 +24,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import random
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -265,6 +269,40 @@ def update_graph_with_runtimes(
     print(f"Updated {out}: {len(ops)} ops, {n_cpu} with {device_id_cpu}, {n_gpu} with {device_id_gpu}.")
 
 
+def generate_random_placement(
+    graph_path: str,
+    output_path: Optional[str] = None,
+    devices: Optional[List[str]] = None,
+    seed: int = 42,
+) -> None:
+    """Randomly assign device_id for every op and write the result as a new graph JSON.
+
+    Each op gets a uniformly random device from `devices` (default: ["cpu:0", "gpu:0"]).
+    This is a pure placement baseline.
+    """
+    if not devices:
+        devices = ["cpu:0", "gpu:0"]
+    rng = random.Random(seed)
+    with open(graph_path, "r", encoding="utf-8") as f:
+        graph = json.load(f)
+    ops = graph.get("ops", [])
+    counts: Dict[str, int] = {}
+    for op in ops:
+        chosen = rng.choice(devices)
+        op["device_id"] = chosen
+        # Keep only the assigned device's measured runtime so the simulator
+        # has real timing data. Ops with no measurement for that device get 0.0.
+        measured = op.get("runtime_on_device", {}).get(chosen, 0.0)
+        op["runtime_on_device"] = {chosen: measured}
+        counts[chosen] = counts.get(chosen, 0) + 1
+    out = Path(output_path or graph_path)
+    with out.open("w", encoding="utf-8") as f:
+        json.dump(graph, f, indent=2)
+    dist = ", ".join(f"{d}={n}" for d, n in sorted(counts.items()))
+    print(f"Random placement (seed={seed}, devices={devices}): {len(ops)} ops → {dist}")
+    print(f"Saved to {out}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Measure ONNX op runtimes on CPU/GPU and update graph JSON. Use with ONNX/graph from bert_onnx_pipeline.py."
@@ -276,9 +314,25 @@ def main() -> None:
     parser.add_argument("--runs", type=int, default=20, help="Profiled runs (last run used for profile)")
     parser.add_argument("--cpu-only", action="store_true", help="Only measure CPU (use when CUDA segfaults or is missing)")
     parser.add_argument("--gpu-only", action="store_true", help="Only measure GPU and merge into graph (run after --cpu-only to avoid segfault)")
+    parser.add_argument("--random", action="store_true", help="Randomly assign device_id per op (requires runtime_on_device already populated); no ONNX session is run")
+    parser.add_argument("--random-seed", type=int, default=42, help="RNG seed for --random placement (default: 42)")
+    parser.add_argument("--random-devices", default=None, help="Comma-separated device ids to restrict random choices, e.g. 'cpu:0,gpu:0' (default: all measured devices)")
     args = parser.parse_args()
     onnx_path = Path(args.onnx)
     graph_path = Path(args.graph)
+
+    if args.random:
+        if not graph_path.is_file():
+            raise SystemExit(f"Graph file not found: {graph_path}")
+        restrict = [d.strip() for d in args.random_devices.split(",")] if args.random_devices else None
+        generate_random_placement(
+            str(graph_path),
+            output_path=args.output,
+            devices=restrict,
+            seed=args.random_seed,
+        )
+        return 1
+
     if not onnx_path.is_file():
         raise SystemExit(
             f"ONNX file not found: {onnx_path}. "

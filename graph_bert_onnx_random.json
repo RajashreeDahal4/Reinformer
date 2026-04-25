@@ -1,0 +1,5946 @@
+{
+  "schema_version": 1,
+  "ops": [
+    {
+      "id": "op0",
+      "name": "/bert/embeddings/word_embeddings/Gather",
+      "fx_op": "onnx_node",
+      "target": "Gather",
+      "device_id": "cpu:0",
+      "dependencies": [],
+      "output_tensors": [
+        {
+          "id": "op0_/bert/embeddings/word_embeddings/Gather_output_0",
+          "size_bytes": 49152.0,
+          "shape": [
+            1,
+            16,
+            768
+          ]
+        }
+      ],
+      "memory_footprint": 49152.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.836e-05
+      }
+    },
+    {
+      "id": "op1",
+      "name": "/bert/embeddings/Add",
+      "fx_op": "onnx_node",
+      "target": "Add",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op0"
+      ],
+      "output_tensors": [
+        {
+          "id": "op1_/bert/embeddings/Add_output_0",
+          "size_bytes": 49152.0,
+          "shape": [
+            1,
+            16,
+            768
+          ]
+        }
+      ],
+      "memory_footprint": 49152.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.292e-05
+      }
+    },
+    {
+      "id": "op2",
+      "name": "SkipLayerNormalization",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op1"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.00067876
+      }
+    },
+    {
+      "id": "op3",
+      "name": "gemm_input_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op2"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0
+      }
+    },
+    {
+      "id": "op4",
+      "name": "/bert/encoder/layer.0/attention/self/key/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op3"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00011831999999999999
+      }
+    },
+    {
+      "id": "op5",
+      "name": "gemm_output_reshape_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op4"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 2.992e-05
+      }
+    },
+    {
+      "id": "op6",
+      "name": "/bert/encoder/layer.0/attention/self/Transpose_2",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op5"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 6.548e-05
+      }
+    },
+    {
+      "id": "op7",
+      "name": "gemm_input_reshape_token_2",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op2"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0
+      }
+    },
+    {
+      "id": "op8",
+      "name": "/bert/encoder/layer.0/attention/self/query/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op7"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0018088800000000001
+      }
+    },
+    {
+      "id": "op9",
+      "name": "gemm_output_reshape_token_5_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op8"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.0079999999999997e-05
+      }
+    },
+    {
+      "id": "op10",
+      "name": "/bert/encoder/layer.0/attention/self/Transpose",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op9"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.4439999999999996e-05
+      }
+    },
+    {
+      "id": "op11",
+      "name": "/bert/encoder/layer.0/attention/self/MatMul/MatMulScaleFusion/",
+      "fx_op": "onnx_node",
+      "target": "FusedMatMul",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op10",
+        "op6"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.36e-05
+      }
+    },
+    {
+      "id": "op12",
+      "name": "/bert/Unsqueeze",
+      "fx_op": "onnx_node",
+      "target": "Unsqueeze",
+      "device_id": "cpu:0",
+      "dependencies": [],
+      "output_tensors": [
+        {
+          "id": "op12_/bert/Unsqueeze_output_0",
+          "size_bytes": 128.0,
+          "shape": [
+            1,
+            1,
+            16
+          ]
+        }
+      ],
+      "memory_footprint": 128.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.168e-05
+      }
+    },
+    {
+      "id": "op13",
+      "name": "/bert/Unsqueeze_1",
+      "fx_op": "onnx_node",
+      "target": "Unsqueeze",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op12"
+      ],
+      "output_tensors": [
+        {
+          "id": "op13_/bert/Unsqueeze_1_output_0",
+          "size_bytes": 128.0,
+          "shape": [
+            1,
+            1,
+            1,
+            16
+          ]
+        }
+      ],
+      "memory_footprint": 128.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.084e-05
+      }
+    },
+    {
+      "id": "op14",
+      "name": "/bert/Expand_1",
+      "fx_op": "onnx_node",
+      "target": "Expand",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op13"
+      ],
+      "output_tensors": [
+        {
+          "id": "op14_/bert/Expand_1_output_0",
+          "size_bytes": 2048.0,
+          "shape": [
+            1,
+            1,
+            16,
+            16
+          ]
+        }
+      ],
+      "memory_footprint": 2048.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.268e-05
+      }
+    },
+    {
+      "id": "op15",
+      "name": "/bert/Cast",
+      "fx_op": "onnx_node",
+      "target": "Cast",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op14"
+      ],
+      "output_tensors": [
+        {
+          "id": "op15_/bert/Cast_output_0",
+          "size_bytes": 1024.0,
+          "shape": [
+            1,
+            1,
+            16,
+            16
+          ]
+        }
+      ],
+      "memory_footprint": 1024.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.184e-05
+      }
+    },
+    {
+      "id": "op16",
+      "name": "/bert/Sub",
+      "fx_op": "onnx_node",
+      "target": "Sub",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op15"
+      ],
+      "output_tensors": [
+        {
+          "id": "op16_/bert/Sub_output_0",
+          "size_bytes": 1024.0,
+          "shape": [
+            1,
+            1,
+            16,
+            16
+          ]
+        }
+      ],
+      "memory_footprint": 1024.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0029322399999999996
+      }
+    },
+    {
+      "id": "op17",
+      "name": "/bert/Cast_1",
+      "fx_op": "onnx_node",
+      "target": "Cast",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op16"
+      ],
+      "output_tensors": [
+        {
+          "id": "op17_/bert/Cast_1_output_0",
+          "size_bytes": 256.0,
+          "shape": [
+            1,
+            1,
+            16,
+            16
+          ]
+        }
+      ],
+      "memory_footprint": 256.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.196e-05
+      }
+    },
+    {
+      "id": "op18",
+      "name": "/bert/Where_2",
+      "fx_op": "onnx_node",
+      "target": "Where",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op17",
+        "op16"
+      ],
+      "output_tensors": [
+        {
+          "id": "op18_/bert/Where_2_output_0",
+          "size_bytes": 1024.0,
+          "shape": [
+            1,
+            1,
+            16,
+            16
+          ]
+        }
+      ],
+      "memory_footprint": 1024.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.00104
+      }
+    },
+    {
+      "id": "op19",
+      "name": "/bert/encoder/layer.0/attention/self/Add",
+      "fx_op": "onnx_node",
+      "target": "Add",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op11",
+        "op18"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0
+      }
+    },
+    {
+      "id": "op20",
+      "name": "/bert/encoder/layer.0/attention/self/Softmax",
+      "fx_op": "onnx_node",
+      "target": "Softmax",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op19"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.6840000000000006e-05
+      }
+    },
+    {
+      "id": "op21",
+      "name": "gemm_input_reshape_token_8",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op2"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.072e-05
+      }
+    },
+    {
+      "id": "op22",
+      "name": "/bert/encoder/layer.0/attention/self/value/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op21"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.724e-05
+      }
+    },
+    {
+      "id": "op23",
+      "name": "gemm_output_reshape_token_11_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op22"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.064e-05
+      }
+    },
+    {
+      "id": "op24",
+      "name": "/bert/encoder/layer.0/attention/self/Transpose_1",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op23"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.404e-05
+      }
+    },
+    {
+      "id": "op25",
+      "name": "/bert/encoder/layer.0/attention/self/MatMul_1",
+      "fx_op": "onnx_node",
+      "target": "MatMul",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op20",
+        "op24"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.9840000000000005e-05
+      }
+    },
+    {
+      "id": "op26",
+      "name": "/bert/encoder/layer.0/attention/self/Transpose_3",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op25"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.608e-05
+      }
+    },
+    {
+      "id": "op27",
+      "name": "/bert/encoder/layer.0/attention/self/Reshape_3_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op26"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.024e-05
+      }
+    },
+    {
+      "id": "op28",
+      "name": "/bert/encoder/layer.0/attention/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op27"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00012412
+      }
+    },
+    {
+      "id": "op29",
+      "name": "gemm_output_reshape_token_17",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op28"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.056e-05
+      }
+    },
+    {
+      "id": "op30",
+      "name": "SkipLayerNormalization_token_437",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op29",
+        "op2"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.44e-05
+      }
+    },
+    {
+      "id": "op31",
+      "name": "gemm_input_reshape_token_20",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op30"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 2.992e-05
+      }
+    },
+    {
+      "id": "op32",
+      "name": "/bert/encoder/layer.0/intermediate/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op31"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.00018831999999999999
+      }
+    },
+    {
+      "id": "op33",
+      "name": "gemm_output_reshape_token_23",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op32"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.116e-05
+      }
+    },
+    {
+      "id": "op34",
+      "name": "Gelu",
+      "fx_op": "onnx_node",
+      "target": "Gelu",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op33"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.036e-05
+      }
+    },
+    {
+      "id": "op35",
+      "name": "gemm_input_reshape_token_26",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op34"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.028e-05
+      }
+    },
+    {
+      "id": "op36",
+      "name": "/bert/encoder/layer.0/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op35"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.868e-05
+      }
+    },
+    {
+      "id": "op37",
+      "name": "gemm_output_reshape_token_29",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op36"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.072e-05
+      }
+    },
+    {
+      "id": "op38",
+      "name": "SkipLayerNormalization_token_438",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op37",
+        "op30"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.44e-05
+      }
+    },
+    {
+      "id": "op39",
+      "name": "gemm_input_reshape_token_32",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op38"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0
+      }
+    },
+    {
+      "id": "op40",
+      "name": "/bert/encoder/layer.1/attention/self/key/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op39"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.616e-05
+      }
+    },
+    {
+      "id": "op41",
+      "name": "gemm_output_reshape_token_35_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op40"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0280000000000002e-05
+      }
+    },
+    {
+      "id": "op42",
+      "name": "/bert/encoder/layer.1/attention/self/Transpose_2",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op41"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 6.668e-05
+      }
+    },
+    {
+      "id": "op43",
+      "name": "gemm_input_reshape_token_38",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op38"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0
+      }
+    },
+    {
+      "id": "op44",
+      "name": "/bert/encoder/layer.1/attention/self/query/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op43"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00011823999999999999
+      }
+    },
+    {
+      "id": "op45",
+      "name": "gemm_output_reshape_token_41_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op44"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.032e-05
+      }
+    },
+    {
+      "id": "op46",
+      "name": "/bert/encoder/layer.1/attention/self/Transpose",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op45"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.372e-05
+      }
+    },
+    {
+      "id": "op47",
+      "name": "/bert/encoder/layer.1/attention/self/MatMul/MatMulScaleFusion/",
+      "fx_op": "onnx_node",
+      "target": "FusedMatMul",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op46",
+        "op42"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.068e-05
+      }
+    },
+    {
+      "id": "op48",
+      "name": "/bert/encoder/layer.1/attention/self/Add",
+      "fx_op": "onnx_node",
+      "target": "Add",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op47",
+        "op18"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.256e-05
+      }
+    },
+    {
+      "id": "op49",
+      "name": "/bert/encoder/layer.1/attention/self/Softmax",
+      "fx_op": "onnx_node",
+      "target": "Softmax",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op48"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.656e-05
+      }
+    },
+    {
+      "id": "op50",
+      "name": "gemm_input_reshape_token_44",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op38"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.02e-05
+      }
+    },
+    {
+      "id": "op51",
+      "name": "/bert/encoder/layer.1/attention/self/value/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op50"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.6479999999999996e-05
+      }
+    },
+    {
+      "id": "op52",
+      "name": "gemm_output_reshape_token_47_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op51"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.044e-05
+      }
+    },
+    {
+      "id": "op53",
+      "name": "/bert/encoder/layer.1/attention/self/Transpose_1",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op52"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.3239999999999998e-05
+      }
+    },
+    {
+      "id": "op54",
+      "name": "/bert/encoder/layer.1/attention/self/MatMul_1",
+      "fx_op": "onnx_node",
+      "target": "MatMul",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op49",
+        "op53"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.9840000000000005e-05
+      }
+    },
+    {
+      "id": "op55",
+      "name": "/bert/encoder/layer.1/attention/self/Transpose_3",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op54"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.296e-05
+      }
+    },
+    {
+      "id": "op56",
+      "name": "/bert/encoder/layer.1/attention/self/Reshape_3_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op55"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0039999999999998e-05
+      }
+    },
+    {
+      "id": "op57",
+      "name": "/bert/encoder/layer.1/attention/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op56"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00012728000000000001
+      }
+    },
+    {
+      "id": "op58",
+      "name": "gemm_output_reshape_token_53",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op57"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.02e-05
+      }
+    },
+    {
+      "id": "op59",
+      "name": "SkipLayerNormalization_token_439",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op58",
+        "op38"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.504e-05
+      }
+    },
+    {
+      "id": "op60",
+      "name": "gemm_input_reshape_token_56",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op59"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.028e-05
+      }
+    },
+    {
+      "id": "op61",
+      "name": "/bert/encoder/layer.1/intermediate/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op60"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00026004
+      }
+    },
+    {
+      "id": "op62",
+      "name": "gemm_output_reshape_token_59",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op61"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.1519999999999996e-05
+      }
+    },
+    {
+      "id": "op63",
+      "name": "Gelu_token_426",
+      "fx_op": "onnx_node",
+      "target": "Gelu",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op62"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.232e-05
+      }
+    },
+    {
+      "id": "op64",
+      "name": "gemm_input_reshape_token_62",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op63"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0079999999999997e-05
+      }
+    },
+    {
+      "id": "op65",
+      "name": "/bert/encoder/layer.1/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op64"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.604e-05
+      }
+    },
+    {
+      "id": "op66",
+      "name": "gemm_output_reshape_token_65",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op65"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.1519999999999996e-05
+      }
+    },
+    {
+      "id": "op67",
+      "name": "SkipLayerNormalization_token_440",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op66",
+        "op59"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.384e-05
+      }
+    },
+    {
+      "id": "op68",
+      "name": "gemm_input_reshape_token_68",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op67"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0
+      }
+    },
+    {
+      "id": "op69",
+      "name": "/bert/encoder/layer.2/attention/self/key/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op68"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00011792
+      }
+    },
+    {
+      "id": "op70",
+      "name": "gemm_output_reshape_token_71_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op69"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.0879999999999996e-05
+      }
+    },
+    {
+      "id": "op71",
+      "name": "/bert/encoder/layer.2/attention/self/Transpose_2",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op70"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.332e-05
+      }
+    },
+    {
+      "id": "op72",
+      "name": "gemm_input_reshape_token_74",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op67"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0
+      }
+    },
+    {
+      "id": "op73",
+      "name": "/bert/encoder/layer.2/attention/self/query/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op72"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.612e-05
+      }
+    },
+    {
+      "id": "op74",
+      "name": "gemm_output_reshape_token_77_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op73"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.072e-05
+      }
+    },
+    {
+      "id": "op75",
+      "name": "/bert/encoder/layer.2/attention/self/Transpose",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op74"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.548e-05
+      }
+    },
+    {
+      "id": "op76",
+      "name": "/bert/encoder/layer.2/attention/self/MatMul/MatMulScaleFusion/",
+      "fx_op": "onnx_node",
+      "target": "FusedMatMul",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op75",
+        "op71"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.732e-05
+      }
+    },
+    {
+      "id": "op77",
+      "name": "/bert/encoder/layer.2/attention/self/Add",
+      "fx_op": "onnx_node",
+      "target": "Add",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op76",
+        "op18"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.228e-05
+      }
+    },
+    {
+      "id": "op78",
+      "name": "/bert/encoder/layer.2/attention/self/Softmax",
+      "fx_op": "onnx_node",
+      "target": "Softmax",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op77"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0
+      }
+    },
+    {
+      "id": "op79",
+      "name": "gemm_input_reshape_token_80",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op67"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.024e-05
+      }
+    },
+    {
+      "id": "op80",
+      "name": "/bert/encoder/layer.2/attention/self/value/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op79"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.6200000000000006e-05
+      }
+    },
+    {
+      "id": "op81",
+      "name": "gemm_output_reshape_token_83_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op80"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.048e-05
+      }
+    },
+    {
+      "id": "op82",
+      "name": "/bert/encoder/layer.2/attention/self/Transpose_1",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op81"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.316e-05
+      }
+    },
+    {
+      "id": "op83",
+      "name": "/bert/encoder/layer.2/attention/self/MatMul_1",
+      "fx_op": "onnx_node",
+      "target": "MatMul",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op78",
+        "op82"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.024e-05
+      }
+    },
+    {
+      "id": "op84",
+      "name": "/bert/encoder/layer.2/attention/self/Transpose_3",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op83"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.5719999999999996e-05
+      }
+    },
+    {
+      "id": "op85",
+      "name": "/bert/encoder/layer.2/attention/self/Reshape_3_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op84"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.024e-05
+      }
+    },
+    {
+      "id": "op86",
+      "name": "/bert/encoder/layer.2/attention/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op85"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.624e-05
+      }
+    },
+    {
+      "id": "op87",
+      "name": "gemm_output_reshape_token_89",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op86"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.016e-05
+      }
+    },
+    {
+      "id": "op88",
+      "name": "SkipLayerNormalization_token_441",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op87",
+        "op67"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.404e-05
+      }
+    },
+    {
+      "id": "op89",
+      "name": "gemm_input_reshape_token_92",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op88"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.0079999999999997e-05
+      }
+    },
+    {
+      "id": "op90",
+      "name": "/bert/encoder/layer.2/intermediate/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op89"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00024052
+      }
+    },
+    {
+      "id": "op91",
+      "name": "gemm_output_reshape_token_95",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op90"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.02e-05
+      }
+    },
+    {
+      "id": "op92",
+      "name": "Gelu_token_427",
+      "fx_op": "onnx_node",
+      "target": "Gelu",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op91"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 5.7759999999999996e-05
+      }
+    },
+    {
+      "id": "op93",
+      "name": "gemm_input_reshape_token_98",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op92"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.048e-05
+      }
+    },
+    {
+      "id": "op94",
+      "name": "/bert/encoder/layer.2/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op93"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00027124
+      }
+    },
+    {
+      "id": "op95",
+      "name": "gemm_output_reshape_token_101",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op94"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.08e-05
+      }
+    },
+    {
+      "id": "op96",
+      "name": "SkipLayerNormalization_token_442",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op95",
+        "op88"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.608e-05
+      }
+    },
+    {
+      "id": "op97",
+      "name": "gemm_input_reshape_token_104",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op96"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0
+      }
+    },
+    {
+      "id": "op98",
+      "name": "/bert/encoder/layer.3/attention/self/key/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op97"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00011936
+      }
+    },
+    {
+      "id": "op99",
+      "name": "gemm_output_reshape_token_107_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op98"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.012e-05
+      }
+    },
+    {
+      "id": "op100",
+      "name": "/bert/encoder/layer.3/attention/self/Transpose_2",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op99"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.348e-05
+      }
+    },
+    {
+      "id": "op101",
+      "name": "gemm_input_reshape_token_110",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op96"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0
+      }
+    },
+    {
+      "id": "op102",
+      "name": "/bert/encoder/layer.3/attention/self/query/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op101"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.616e-05
+      }
+    },
+    {
+      "id": "op103",
+      "name": "gemm_output_reshape_token_113_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op102"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.184e-05
+      }
+    },
+    {
+      "id": "op104",
+      "name": "/bert/encoder/layer.3/attention/self/Transpose",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op103"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.696e-05
+      }
+    },
+    {
+      "id": "op105",
+      "name": "/bert/encoder/layer.3/attention/self/MatMul/MatMulScaleFusion/",
+      "fx_op": "onnx_node",
+      "target": "FusedMatMul",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op104",
+        "op100"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.744e-05
+      }
+    },
+    {
+      "id": "op106",
+      "name": "/bert/encoder/layer.3/attention/self/Add",
+      "fx_op": "onnx_node",
+      "target": "Add",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op105",
+        "op18"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0
+      }
+    },
+    {
+      "id": "op107",
+      "name": "/bert/encoder/layer.3/attention/self/Softmax",
+      "fx_op": "onnx_node",
+      "target": "Softmax",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op106"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.724e-05
+      }
+    },
+    {
+      "id": "op108",
+      "name": "gemm_input_reshape_token_116",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op96"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2e-05
+      }
+    },
+    {
+      "id": "op109",
+      "name": "/bert/encoder/layer.3/attention/self/value/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op108"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.66e-05
+      }
+    },
+    {
+      "id": "op110",
+      "name": "gemm_output_reshape_token_119_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op109"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.184e-05
+      }
+    },
+    {
+      "id": "op111",
+      "name": "/bert/encoder/layer.3/attention/self/Transpose_1",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op110"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.332e-05
+      }
+    },
+    {
+      "id": "op112",
+      "name": "/bert/encoder/layer.3/attention/self/MatMul_1",
+      "fx_op": "onnx_node",
+      "target": "MatMul",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op107",
+        "op111"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.0719999999999996e-05
+      }
+    },
+    {
+      "id": "op113",
+      "name": "/bert/encoder/layer.3/attention/self/Transpose_3",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op112"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.308e-05
+      }
+    },
+    {
+      "id": "op114",
+      "name": "/bert/encoder/layer.3/attention/self/Reshape_3_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op113"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.004e-05
+      }
+    },
+    {
+      "id": "op115",
+      "name": "/bert/encoder/layer.3/attention/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op114"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00012092
+      }
+    },
+    {
+      "id": "op116",
+      "name": "gemm_output_reshape_token_125",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op115"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0280000000000002e-05
+      }
+    },
+    {
+      "id": "op117",
+      "name": "SkipLayerNormalization_token_443",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op116",
+        "op96"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.532e-05
+      }
+    },
+    {
+      "id": "op118",
+      "name": "gemm_input_reshape_token_128",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op117"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.132e-05
+      }
+    },
+    {
+      "id": "op119",
+      "name": "/bert/encoder/layer.3/intermediate/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op118"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.3119999999999995e-05
+      }
+    },
+    {
+      "id": "op120",
+      "name": "gemm_output_reshape_token_131",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op119"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.128e-05
+      }
+    },
+    {
+      "id": "op121",
+      "name": "Gelu_token_428",
+      "fx_op": "onnx_node",
+      "target": "Gelu",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op120"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 5.768e-05
+      }
+    },
+    {
+      "id": "op122",
+      "name": "gemm_input_reshape_token_134",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op121"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2e-05
+      }
+    },
+    {
+      "id": "op123",
+      "name": "/bert/encoder/layer.3/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op122"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.572e-05
+      }
+    },
+    {
+      "id": "op124",
+      "name": "gemm_output_reshape_token_137",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op123"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.068e-05
+      }
+    },
+    {
+      "id": "op125",
+      "name": "SkipLayerNormalization_token_444",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op124",
+        "op117"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.5799999999999995e-05
+      }
+    },
+    {
+      "id": "op126",
+      "name": "gemm_input_reshape_token_140",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op125"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0
+      }
+    },
+    {
+      "id": "op127",
+      "name": "/bert/encoder/layer.4/attention/self/key/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op126"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.6479999999999996e-05
+      }
+    },
+    {
+      "id": "op128",
+      "name": "gemm_output_reshape_token_143_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op127"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.068e-05
+      }
+    },
+    {
+      "id": "op129",
+      "name": "/bert/encoder/layer.4/attention/self/Transpose_2",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op128"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 6.487999999999999e-05
+      }
+    },
+    {
+      "id": "op130",
+      "name": "gemm_input_reshape_token_146",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op125"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0
+      }
+    },
+    {
+      "id": "op131",
+      "name": "/bert/encoder/layer.4/attention/self/query/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op130"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0001208
+      }
+    },
+    {
+      "id": "op132",
+      "name": "gemm_output_reshape_token_149_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op131"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.06e-05
+      }
+    },
+    {
+      "id": "op133",
+      "name": "/bert/encoder/layer.4/attention/self/Transpose",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op132"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.3440000000000003e-05
+      }
+    },
+    {
+      "id": "op134",
+      "name": "/bert/encoder/layer.4/attention/self/MatMul/MatMulScaleFusion/",
+      "fx_op": "onnx_node",
+      "target": "FusedMatMul",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op133",
+        "op129"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.0600000000000004e-05
+      }
+    },
+    {
+      "id": "op135",
+      "name": "/bert/encoder/layer.4/attention/self/Add",
+      "fx_op": "onnx_node",
+      "target": "Add",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op134",
+        "op18"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.268e-05
+      }
+    },
+    {
+      "id": "op136",
+      "name": "/bert/encoder/layer.4/attention/self/Softmax",
+      "fx_op": "onnx_node",
+      "target": "Softmax",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op135"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.652e-05
+      }
+    },
+    {
+      "id": "op137",
+      "name": "gemm_input_reshape_token_152",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op125"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0039999999999998e-05
+      }
+    },
+    {
+      "id": "op138",
+      "name": "/bert/encoder/layer.4/attention/self/value/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op137"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00011856
+      }
+    },
+    {
+      "id": "op139",
+      "name": "gemm_output_reshape_token_155_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op138"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.048e-05
+      }
+    },
+    {
+      "id": "op140",
+      "name": "/bert/encoder/layer.4/attention/self/Transpose_1",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op139"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.328e-05
+      }
+    },
+    {
+      "id": "op141",
+      "name": "/bert/encoder/layer.4/attention/self/MatMul_1",
+      "fx_op": "onnx_node",
+      "target": "MatMul",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op136",
+        "op140"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.0719999999999996e-05
+      }
+    },
+    {
+      "id": "op142",
+      "name": "/bert/encoder/layer.4/attention/self/Transpose_3",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op141"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.588e-05
+      }
+    },
+    {
+      "id": "op143",
+      "name": "/bert/encoder/layer.4/attention/self/Reshape_3_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op142"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0079999999999997e-05
+      }
+    },
+    {
+      "id": "op144",
+      "name": "/bert/encoder/layer.4/attention/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op143"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.632e-05
+      }
+    },
+    {
+      "id": "op145",
+      "name": "gemm_output_reshape_token_161",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op144"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.044e-05
+      }
+    },
+    {
+      "id": "op146",
+      "name": "SkipLayerNormalization_token_445",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op145",
+        "op125"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.384e-05
+      }
+    },
+    {
+      "id": "op147",
+      "name": "gemm_input_reshape_token_164",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op146"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.012e-05
+      }
+    },
+    {
+      "id": "op148",
+      "name": "/bert/encoder/layer.4/intermediate/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op147"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00070128
+      }
+    },
+    {
+      "id": "op149",
+      "name": "gemm_output_reshape_token_167",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op148"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.2200000000000003e-05
+      }
+    },
+    {
+      "id": "op150",
+      "name": "Gelu_token_429",
+      "fx_op": "onnx_node",
+      "target": "Gelu",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op149"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 5.984e-05
+      }
+    },
+    {
+      "id": "op151",
+      "name": "gemm_input_reshape_token_170",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op150"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.1480000000000004e-05
+      }
+    },
+    {
+      "id": "op152",
+      "name": "/bert/encoder/layer.4/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op151"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.584e-05
+      }
+    },
+    {
+      "id": "op153",
+      "name": "gemm_output_reshape_token_173",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op152"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.208e-05
+      }
+    },
+    {
+      "id": "op154",
+      "name": "SkipLayerNormalization_token_446",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op153",
+        "op146"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.736e-05
+      }
+    },
+    {
+      "id": "op155",
+      "name": "gemm_input_reshape_token_176",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op154"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0
+      }
+    },
+    {
+      "id": "op156",
+      "name": "/bert/encoder/layer.5/attention/self/key/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op155"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00012991999999999998
+      }
+    },
+    {
+      "id": "op157",
+      "name": "gemm_output_reshape_token_179_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op156"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.048e-05
+      }
+    },
+    {
+      "id": "op158",
+      "name": "/bert/encoder/layer.5/attention/self/Transpose_2",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op157"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 7.007999999999999e-05
+      }
+    },
+    {
+      "id": "op159",
+      "name": "gemm_input_reshape_token_182",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op154"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0
+      }
+    },
+    {
+      "id": "op160",
+      "name": "/bert/encoder/layer.5/attention/self/query/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op159"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0001292
+      }
+    },
+    {
+      "id": "op161",
+      "name": "gemm_output_reshape_token_185_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op160"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.052e-05
+      }
+    },
+    {
+      "id": "op162",
+      "name": "/bert/encoder/layer.5/attention/self/Transpose",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op161"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.348e-05
+      }
+    },
+    {
+      "id": "op163",
+      "name": "/bert/encoder/layer.5/attention/self/MatMul/MatMulScaleFusion/",
+      "fx_op": "onnx_node",
+      "target": "FusedMatMul",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op162",
+        "op158"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.132e-05
+      }
+    },
+    {
+      "id": "op164",
+      "name": "/bert/encoder/layer.5/attention/self/Add",
+      "fx_op": "onnx_node",
+      "target": "Add",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op163",
+        "op18"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.268e-05
+      }
+    },
+    {
+      "id": "op165",
+      "name": "/bert/encoder/layer.5/attention/self/Softmax",
+      "fx_op": "onnx_node",
+      "target": "Softmax",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op164"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0
+      }
+    },
+    {
+      "id": "op166",
+      "name": "gemm_input_reshape_token_188",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op154"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0920000000000003e-05
+      }
+    },
+    {
+      "id": "op167",
+      "name": "/bert/encoder/layer.5/attention/self/value/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op166"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00013556
+      }
+    },
+    {
+      "id": "op168",
+      "name": "gemm_output_reshape_token_191_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op167"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.2200000000000003e-05
+      }
+    },
+    {
+      "id": "op169",
+      "name": "/bert/encoder/layer.5/attention/self/Transpose_1",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op168"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.352e-05
+      }
+    },
+    {
+      "id": "op170",
+      "name": "/bert/encoder/layer.5/attention/self/MatMul_1",
+      "fx_op": "onnx_node",
+      "target": "MatMul",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op165",
+        "op169"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.04e-05
+      }
+    },
+    {
+      "id": "op171",
+      "name": "/bert/encoder/layer.5/attention/self/Transpose_3",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op170"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.304e-05
+      }
+    },
+    {
+      "id": "op172",
+      "name": "/bert/encoder/layer.5/attention/self/Reshape_3_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op171"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0079999999999997e-05
+      }
+    },
+    {
+      "id": "op173",
+      "name": "/bert/encoder/layer.5/attention/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op172"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00013336
+      }
+    },
+    {
+      "id": "op174",
+      "name": "gemm_output_reshape_token_197",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op173"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.068e-05
+      }
+    },
+    {
+      "id": "op175",
+      "name": "SkipLayerNormalization_token_447",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op174",
+        "op154"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.5759999999999996e-05
+      }
+    },
+    {
+      "id": "op176",
+      "name": "gemm_input_reshape_token_200",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op175"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0079999999999997e-05
+      }
+    },
+    {
+      "id": "op177",
+      "name": "/bert/encoder/layer.5/intermediate/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op176"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.3119999999999995e-05
+      }
+    },
+    {
+      "id": "op178",
+      "name": "gemm_output_reshape_token_203",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op177"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.044e-05
+      }
+    },
+    {
+      "id": "op179",
+      "name": "Gelu_token_430",
+      "fx_op": "onnx_node",
+      "target": "Gelu",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op178"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.264e-05
+      }
+    },
+    {
+      "id": "op180",
+      "name": "gemm_input_reshape_token_206",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op179"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0039999999999998e-05
+      }
+    },
+    {
+      "id": "op181",
+      "name": "/bert/encoder/layer.5/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op180"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00032683999999999995
+      }
+    },
+    {
+      "id": "op182",
+      "name": "gemm_output_reshape_token_209",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op181"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.096e-05
+      }
+    },
+    {
+      "id": "op183",
+      "name": "SkipLayerNormalization_token_448",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op182",
+        "op175"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.652e-05
+      }
+    },
+    {
+      "id": "op184",
+      "name": "gemm_input_reshape_token_212",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op183"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0
+      }
+    },
+    {
+      "id": "op185",
+      "name": "/bert/encoder/layer.6/attention/self/key/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op184"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.628e-05
+      }
+    },
+    {
+      "id": "op186",
+      "name": "gemm_output_reshape_token_215_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op185"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.0879999999999996e-05
+      }
+    },
+    {
+      "id": "op187",
+      "name": "/bert/encoder/layer.6/attention/self/Transpose_2",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op186"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 6.128e-05
+      }
+    },
+    {
+      "id": "op188",
+      "name": "gemm_input_reshape_token_218",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op183"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0
+      }
+    },
+    {
+      "id": "op189",
+      "name": "/bert/encoder/layer.6/attention/self/query/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op188"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00013131999999999998
+      }
+    },
+    {
+      "id": "op190",
+      "name": "gemm_output_reshape_token_221_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op189"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.048e-05
+      }
+    },
+    {
+      "id": "op191",
+      "name": "/bert/encoder/layer.6/attention/self/Transpose",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op190"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.524e-05
+      }
+    },
+    {
+      "id": "op192",
+      "name": "/bert/encoder/layer.6/attention/self/MatMul/MatMulScaleFusion/",
+      "fx_op": "onnx_node",
+      "target": "FusedMatMul",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op191",
+        "op187"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.752e-05
+      }
+    },
+    {
+      "id": "op193",
+      "name": "/bert/encoder/layer.6/attention/self/Add",
+      "fx_op": "onnx_node",
+      "target": "Add",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op192",
+        "op18"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.252e-05
+      }
+    },
+    {
+      "id": "op194",
+      "name": "/bert/encoder/layer.6/attention/self/Softmax",
+      "fx_op": "onnx_node",
+      "target": "Softmax",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op193"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0
+      }
+    },
+    {
+      "id": "op195",
+      "name": "gemm_input_reshape_token_224",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op183"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0280000000000002e-05
+      }
+    },
+    {
+      "id": "op196",
+      "name": "/bert/encoder/layer.6/attention/self/value/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op195"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0001374
+      }
+    },
+    {
+      "id": "op197",
+      "name": "gemm_output_reshape_token_227_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op196"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.068e-05
+      }
+    },
+    {
+      "id": "op198",
+      "name": "/bert/encoder/layer.6/attention/self/Transpose_1",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op197"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.316e-05
+      }
+    },
+    {
+      "id": "op199",
+      "name": "/bert/encoder/layer.6/attention/self/MatMul_1",
+      "fx_op": "onnx_node",
+      "target": "MatMul",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op194",
+        "op198"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.048e-05
+      }
+    },
+    {
+      "id": "op200",
+      "name": "/bert/encoder/layer.6/attention/self/Transpose_3",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op199"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.608e-05
+      }
+    },
+    {
+      "id": "op201",
+      "name": "/bert/encoder/layer.6/attention/self/Reshape_3_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op200"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 2.988e-05
+      }
+    },
+    {
+      "id": "op202",
+      "name": "/bert/encoder/layer.6/attention/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op201"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00013464
+      }
+    },
+    {
+      "id": "op203",
+      "name": "gemm_output_reshape_token_233",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op202"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.06e-05
+      }
+    },
+    {
+      "id": "op204",
+      "name": "SkipLayerNormalization_token_449",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op203",
+        "op183"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.5119999999999995e-05
+      }
+    },
+    {
+      "id": "op205",
+      "name": "gemm_input_reshape_token_236",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op204"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.016e-05
+      }
+    },
+    {
+      "id": "op206",
+      "name": "/bert/encoder/layer.6/intermediate/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op205"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.328e-05
+      }
+    },
+    {
+      "id": "op207",
+      "name": "gemm_output_reshape_token_239",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op206"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.052e-05
+      }
+    },
+    {
+      "id": "op208",
+      "name": "Gelu_token_431",
+      "fx_op": "onnx_node",
+      "target": "Gelu",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op207"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 5.732e-05
+      }
+    },
+    {
+      "id": "op209",
+      "name": "gemm_input_reshape_token_242",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op208"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.02e-05
+      }
+    },
+    {
+      "id": "op210",
+      "name": "/bert/encoder/layer.6/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op209"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00037704000000000004
+      }
+    },
+    {
+      "id": "op211",
+      "name": "gemm_output_reshape_token_245",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op210"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.068e-05
+      }
+    },
+    {
+      "id": "op212",
+      "name": "SkipLayerNormalization_token_450",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op211",
+        "op204"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.36e-05
+      }
+    },
+    {
+      "id": "op213",
+      "name": "gemm_input_reshape_token_248",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op212"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0
+      }
+    },
+    {
+      "id": "op214",
+      "name": "/bert/encoder/layer.7/attention/self/key/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op213"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.64e-05
+      }
+    },
+    {
+      "id": "op215",
+      "name": "gemm_output_reshape_token_251_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op214"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0399999999999998e-05
+      }
+    },
+    {
+      "id": "op216",
+      "name": "/bert/encoder/layer.7/attention/self/Transpose_2",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op215"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.328e-05
+      }
+    },
+    {
+      "id": "op217",
+      "name": "gemm_input_reshape_token_254",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op212"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0
+      }
+    },
+    {
+      "id": "op218",
+      "name": "/bert/encoder/layer.7/attention/self/query/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op217"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.644e-05
+      }
+    },
+    {
+      "id": "op219",
+      "name": "gemm_output_reshape_token_257_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op218"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0280000000000002e-05
+      }
+    },
+    {
+      "id": "op220",
+      "name": "/bert/encoder/layer.7/attention/self/Transpose",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op219"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.54e-05
+      }
+    },
+    {
+      "id": "op221",
+      "name": "/bert/encoder/layer.7/attention/self/MatMul/MatMulScaleFusion/",
+      "fx_op": "onnx_node",
+      "target": "FusedMatMul",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op220",
+        "op216"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 9.536e-05
+      }
+    },
+    {
+      "id": "op222",
+      "name": "/bert/encoder/layer.7/attention/self/Add",
+      "fx_op": "onnx_node",
+      "target": "Add",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op221",
+        "op18"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0
+      }
+    },
+    {
+      "id": "op223",
+      "name": "/bert/encoder/layer.7/attention/self/Softmax",
+      "fx_op": "onnx_node",
+      "target": "Softmax",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op222"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.624e-05
+      }
+    },
+    {
+      "id": "op224",
+      "name": "gemm_input_reshape_token_260",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op212"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 2.992e-05
+      }
+    },
+    {
+      "id": "op225",
+      "name": "/bert/encoder/layer.7/attention/self/value/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op224"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00014444
+      }
+    },
+    {
+      "id": "op226",
+      "name": "gemm_output_reshape_token_263_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op225"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.064e-05
+      }
+    },
+    {
+      "id": "op227",
+      "name": "/bert/encoder/layer.7/attention/self/Transpose_1",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op226"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.464e-05
+      }
+    },
+    {
+      "id": "op228",
+      "name": "/bert/encoder/layer.7/attention/self/MatMul_1",
+      "fx_op": "onnx_node",
+      "target": "MatMul",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op223",
+        "op227"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.976e-05
+      }
+    },
+    {
+      "id": "op229",
+      "name": "/bert/encoder/layer.7/attention/self/Transpose_3",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op228"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.308e-05
+      }
+    },
+    {
+      "id": "op230",
+      "name": "/bert/encoder/layer.7/attention/self/Reshape_3_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op229"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 2.968e-05
+      }
+    },
+    {
+      "id": "op231",
+      "name": "/bert/encoder/layer.7/attention/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op230"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00014296
+      }
+    },
+    {
+      "id": "op232",
+      "name": "gemm_output_reshape_token_269",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op231"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.052e-05
+      }
+    },
+    {
+      "id": "op233",
+      "name": "SkipLayerNormalization_token_451",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op232",
+        "op212"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.5079999999999995e-05
+      }
+    },
+    {
+      "id": "op234",
+      "name": "gemm_input_reshape_token_272",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op233"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.0399999999999997e-05
+      }
+    },
+    {
+      "id": "op235",
+      "name": "/bert/encoder/layer.7/intermediate/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op234"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00033808
+      }
+    },
+    {
+      "id": "op236",
+      "name": "gemm_output_reshape_token_275",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op235"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.0760000000000004e-05
+      }
+    },
+    {
+      "id": "op237",
+      "name": "Gelu_token_432",
+      "fx_op": "onnx_node",
+      "target": "Gelu",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op236"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.252e-05
+      }
+    },
+    {
+      "id": "op238",
+      "name": "gemm_input_reshape_token_278",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op237"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.084e-05
+      }
+    },
+    {
+      "id": "op239",
+      "name": "/bert/encoder/layer.7/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op238"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00065472
+      }
+    },
+    {
+      "id": "op240",
+      "name": "gemm_output_reshape_token_281",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op239"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.3079999999999995e-05
+      }
+    },
+    {
+      "id": "op241",
+      "name": "SkipLayerNormalization_token_452",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op240",
+        "op233"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.94e-05
+      }
+    },
+    {
+      "id": "op242",
+      "name": "gemm_input_reshape_token_284",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op241"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0
+      }
+    },
+    {
+      "id": "op243",
+      "name": "/bert/encoder/layer.8/attention/self/key/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op242"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.604e-05
+      }
+    },
+    {
+      "id": "op244",
+      "name": "gemm_output_reshape_token_287_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op243"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.064e-05
+      }
+    },
+    {
+      "id": "op245",
+      "name": "/bert/encoder/layer.8/attention/self/Transpose_2",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op244"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 6.887999999999999e-05
+      }
+    },
+    {
+      "id": "op246",
+      "name": "gemm_input_reshape_token_290",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op241"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0
+      }
+    },
+    {
+      "id": "op247",
+      "name": "/bert/encoder/layer.8/attention/self/query/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op246"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00012064
+      }
+    },
+    {
+      "id": "op248",
+      "name": "gemm_output_reshape_token_293_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op247"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0359999999999998e-05
+      }
+    },
+    {
+      "id": "op249",
+      "name": "/bert/encoder/layer.8/attention/self/Transpose",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op248"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.352e-05
+      }
+    },
+    {
+      "id": "op250",
+      "name": "/bert/encoder/layer.8/attention/self/MatMul/MatMulScaleFusion/",
+      "fx_op": "onnx_node",
+      "target": "FusedMatMul",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op249",
+        "op245"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.284e-05
+      }
+    },
+    {
+      "id": "op251",
+      "name": "/bert/encoder/layer.8/attention/self/Add",
+      "fx_op": "onnx_node",
+      "target": "Add",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op250",
+        "op18"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0
+      }
+    },
+    {
+      "id": "op252",
+      "name": "/bert/encoder/layer.8/attention/self/Softmax",
+      "fx_op": "onnx_node",
+      "target": "Softmax",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op251"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0
+      }
+    },
+    {
+      "id": "op253",
+      "name": "gemm_input_reshape_token_296",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op241"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.02e-05
+      }
+    },
+    {
+      "id": "op254",
+      "name": "/bert/encoder/layer.8/attention/self/value/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op253"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00012584
+      }
+    },
+    {
+      "id": "op255",
+      "name": "gemm_output_reshape_token_299_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op254"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.296e-05
+      }
+    },
+    {
+      "id": "op256",
+      "name": "/bert/encoder/layer.8/attention/self/Transpose_1",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op255"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.3120000000000002e-05
+      }
+    },
+    {
+      "id": "op257",
+      "name": "/bert/encoder/layer.8/attention/self/MatMul_1",
+      "fx_op": "onnx_node",
+      "target": "MatMul",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op252",
+        "op256"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.1439999999999996e-05
+      }
+    },
+    {
+      "id": "op258",
+      "name": "/bert/encoder/layer.8/attention/self/Transpose_3",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op257"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.596e-05
+      }
+    },
+    {
+      "id": "op259",
+      "name": "/bert/encoder/layer.8/attention/self/Reshape_3_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op258"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.012e-05
+      }
+    },
+    {
+      "id": "op260",
+      "name": "/bert/encoder/layer.8/attention/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op259"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.6479999999999996e-05
+      }
+    },
+    {
+      "id": "op261",
+      "name": "gemm_output_reshape_token_305",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op260"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.08e-05
+      }
+    },
+    {
+      "id": "op262",
+      "name": "SkipLayerNormalization_token_453",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op261",
+        "op241"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.388e-05
+      }
+    },
+    {
+      "id": "op263",
+      "name": "gemm_input_reshape_token_308",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op262"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.016e-05
+      }
+    },
+    {
+      "id": "op264",
+      "name": "/bert/encoder/layer.8/intermediate/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op263"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00023272
+      }
+    },
+    {
+      "id": "op265",
+      "name": "gemm_output_reshape_token_311",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op264"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.048e-05
+      }
+    },
+    {
+      "id": "op266",
+      "name": "Gelu_token_433",
+      "fx_op": "onnx_node",
+      "target": "Gelu",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op265"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.248e-05
+      }
+    },
+    {
+      "id": "op267",
+      "name": "gemm_input_reshape_token_314",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op266"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.0399999999999997e-05
+      }
+    },
+    {
+      "id": "op268",
+      "name": "/bert/encoder/layer.8/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op267"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.596e-05
+      }
+    },
+    {
+      "id": "op269",
+      "name": "gemm_output_reshape_token_317",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op268"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0359999999999998e-05
+      }
+    },
+    {
+      "id": "op270",
+      "name": "SkipLayerNormalization_token_454",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op269",
+        "op262"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.6280000000000004e-05
+      }
+    },
+    {
+      "id": "op271",
+      "name": "gemm_input_reshape_token_320",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op270"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0
+      }
+    },
+    {
+      "id": "op272",
+      "name": "/bert/encoder/layer.9/attention/self/key/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op271"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00011464
+      }
+    },
+    {
+      "id": "op273",
+      "name": "gemm_output_reshape_token_323_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op272"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.072e-05
+      }
+    },
+    {
+      "id": "op274",
+      "name": "/bert/encoder/layer.9/attention/self/Transpose_2",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op273"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.348e-05
+      }
+    },
+    {
+      "id": "op275",
+      "name": "gemm_input_reshape_token_326",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op270"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0
+      }
+    },
+    {
+      "id": "op276",
+      "name": "/bert/encoder/layer.9/attention/self/query/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op275"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00011888
+      }
+    },
+    {
+      "id": "op277",
+      "name": "gemm_output_reshape_token_329_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op276"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.0760000000000004e-05
+      }
+    },
+    {
+      "id": "op278",
+      "name": "/bert/encoder/layer.9/attention/self/Transpose",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op277"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.352e-05
+      }
+    },
+    {
+      "id": "op279",
+      "name": "/bert/encoder/layer.9/attention/self/MatMul/MatMulScaleFusion/",
+      "fx_op": "onnx_node",
+      "target": "FusedMatMul",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op278",
+        "op274"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.716e-05
+      }
+    },
+    {
+      "id": "op280",
+      "name": "/bert/encoder/layer.9/attention/self/Add",
+      "fx_op": "onnx_node",
+      "target": "Add",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op279",
+        "op18"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.272e-05
+      }
+    },
+    {
+      "id": "op281",
+      "name": "/bert/encoder/layer.9/attention/self/Softmax",
+      "fx_op": "onnx_node",
+      "target": "Softmax",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op280"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0
+      }
+    },
+    {
+      "id": "op282",
+      "name": "gemm_input_reshape_token_332",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op270"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.028e-05
+      }
+    },
+    {
+      "id": "op283",
+      "name": "/bert/encoder/layer.9/attention/self/value/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op282"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.616e-05
+      }
+    },
+    {
+      "id": "op284",
+      "name": "gemm_output_reshape_token_335_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op283"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.052e-05
+      }
+    },
+    {
+      "id": "op285",
+      "name": "/bert/encoder/layer.9/attention/self/Transpose_1",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op284"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.328e-05
+      }
+    },
+    {
+      "id": "op286",
+      "name": "/bert/encoder/layer.9/attention/self/MatMul_1",
+      "fx_op": "onnx_node",
+      "target": "MatMul",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op281",
+        "op285"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.9960000000000004e-05
+      }
+    },
+    {
+      "id": "op287",
+      "name": "/bert/encoder/layer.9/attention/self/Transpose_3",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op286"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.592e-05
+      }
+    },
+    {
+      "id": "op288",
+      "name": "/bert/encoder/layer.9/attention/self/Reshape_3_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op287"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0320000000000002e-05
+      }
+    },
+    {
+      "id": "op289",
+      "name": "/bert/encoder/layer.9/attention/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op288"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.6200000000000006e-05
+      }
+    },
+    {
+      "id": "op290",
+      "name": "gemm_output_reshape_token_341",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op289"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.068e-05
+      }
+    },
+    {
+      "id": "op291",
+      "name": "SkipLayerNormalization_token_455",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op290",
+        "op270"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.52e-05
+      }
+    },
+    {
+      "id": "op292",
+      "name": "gemm_input_reshape_token_344",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op291"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0079999999999997e-05
+      }
+    },
+    {
+      "id": "op293",
+      "name": "/bert/encoder/layer.9/intermediate/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op292"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00024219999999999998
+      }
+    },
+    {
+      "id": "op294",
+      "name": "gemm_output_reshape_token_347",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op293"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.048e-05
+      }
+    },
+    {
+      "id": "op295",
+      "name": "Gelu_token_434",
+      "fx_op": "onnx_node",
+      "target": "Gelu",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op294"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 5.72e-05
+      }
+    },
+    {
+      "id": "op296",
+      "name": "gemm_input_reshape_token_350",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op295"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.016e-05
+      }
+    },
+    {
+      "id": "op297",
+      "name": "/bert/encoder/layer.9/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op296"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.604e-05
+      }
+    },
+    {
+      "id": "op298",
+      "name": "gemm_output_reshape_token_353",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op297"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.08e-05
+      }
+    },
+    {
+      "id": "op299",
+      "name": "SkipLayerNormalization_token_456",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op298",
+        "op291"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.5520000000000005e-05
+      }
+    },
+    {
+      "id": "op300",
+      "name": "gemm_input_reshape_token_356",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op299"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0
+      }
+    },
+    {
+      "id": "op301",
+      "name": "/bert/encoder/layer.10/attention/self/key/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op300"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00011692
+      }
+    },
+    {
+      "id": "op302",
+      "name": "gemm_output_reshape_token_359_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op301"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.064e-05
+      }
+    },
+    {
+      "id": "op303",
+      "name": "/bert/encoder/layer.10/attention/self/Transpose_2",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op302"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.3120000000000002e-05
+      }
+    },
+    {
+      "id": "op304",
+      "name": "gemm_input_reshape_token_362",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op299"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0
+      }
+    },
+    {
+      "id": "op305",
+      "name": "/bert/encoder/layer.10/attention/self/query/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op304"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.608e-05
+      }
+    },
+    {
+      "id": "op306",
+      "name": "gemm_output_reshape_token_365_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op305"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.068e-05
+      }
+    },
+    {
+      "id": "op307",
+      "name": "/bert/encoder/layer.10/attention/self/Transpose",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op306"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.536e-05
+      }
+    },
+    {
+      "id": "op308",
+      "name": "/bert/encoder/layer.10/attention/self/MatMul/MatMulScaleFusion/",
+      "fx_op": "onnx_node",
+      "target": "FusedMatMul",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op307",
+        "op303"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.72e-05
+      }
+    },
+    {
+      "id": "op309",
+      "name": "/bert/encoder/layer.10/attention/self/Add",
+      "fx_op": "onnx_node",
+      "target": "Add",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op308",
+        "op18"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 0.0
+      }
+    },
+    {
+      "id": "op310",
+      "name": "/bert/encoder/layer.10/attention/self/Softmax",
+      "fx_op": "onnx_node",
+      "target": "Softmax",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op309"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.788e-05
+      }
+    },
+    {
+      "id": "op311",
+      "name": "gemm_input_reshape_token_368",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op299"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.02e-05
+      }
+    },
+    {
+      "id": "op312",
+      "name": "/bert/encoder/layer.10/attention/self/value/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op311"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00012664
+      }
+    },
+    {
+      "id": "op313",
+      "name": "gemm_output_reshape_token_371_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op312"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.068e-05
+      }
+    },
+    {
+      "id": "op314",
+      "name": "/bert/encoder/layer.10/attention/self/Transpose_1",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op313"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.5e-05
+      }
+    },
+    {
+      "id": "op315",
+      "name": "/bert/encoder/layer.10/attention/self/MatMul_1",
+      "fx_op": "onnx_node",
+      "target": "MatMul",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op310",
+        "op314"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.736e-05
+      }
+    },
+    {
+      "id": "op316",
+      "name": "/bert/encoder/layer.10/attention/self/Transpose_3",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op315"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.304e-05
+      }
+    },
+    {
+      "id": "op317",
+      "name": "/bert/encoder/layer.10/attention/self/Reshape_3_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op316"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.104e-05
+      }
+    },
+    {
+      "id": "op318",
+      "name": "/bert/encoder/layer.10/attention/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op317"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00013124
+      }
+    },
+    {
+      "id": "op319",
+      "name": "gemm_output_reshape_token_377",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op318"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.188e-05
+      }
+    },
+    {
+      "id": "op320",
+      "name": "SkipLayerNormalization_token_457",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op319",
+        "op299"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.732e-05
+      }
+    },
+    {
+      "id": "op321",
+      "name": "gemm_input_reshape_token_380",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op320"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.016e-05
+      }
+    },
+    {
+      "id": "op322",
+      "name": "/bert/encoder/layer.10/intermediate/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op321"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00023488
+      }
+    },
+    {
+      "id": "op323",
+      "name": "gemm_output_reshape_token_383",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op322"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.1440000000000004e-05
+      }
+    },
+    {
+      "id": "op324",
+      "name": "Gelu_token_435",
+      "fx_op": "onnx_node",
+      "target": "Gelu",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op323"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.248e-05
+      }
+    },
+    {
+      "id": "op325",
+      "name": "gemm_input_reshape_token_386",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op324"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0079999999999997e-05
+      }
+    },
+    {
+      "id": "op326",
+      "name": "/bert/encoder/layer.10/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op325"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0002504
+      }
+    },
+    {
+      "id": "op327",
+      "name": "gemm_output_reshape_token_389",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op326"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0280000000000002e-05
+      }
+    },
+    {
+      "id": "op328",
+      "name": "SkipLayerNormalization_token_458",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op327",
+        "op320"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.72e-05
+      }
+    },
+    {
+      "id": "op329",
+      "name": "gemm_input_reshape_token_392",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op328"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0
+      }
+    },
+    {
+      "id": "op330",
+      "name": "/bert/encoder/layer.11/attention/self/key/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op329"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.616e-05
+      }
+    },
+    {
+      "id": "op331",
+      "name": "gemm_output_reshape_token_395_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op330"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.052e-05
+      }
+    },
+    {
+      "id": "op332",
+      "name": "/bert/encoder/layer.11/attention/self/Transpose_2",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op331"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.328e-05
+      }
+    },
+    {
+      "id": "op333",
+      "name": "gemm_input_reshape_token_398",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op328"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0
+      }
+    },
+    {
+      "id": "op334",
+      "name": "/bert/encoder/layer.11/attention/self/query/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op333"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.000115
+      }
+    },
+    {
+      "id": "op335",
+      "name": "gemm_output_reshape_token_401_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op334"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.012e-05
+      }
+    },
+    {
+      "id": "op336",
+      "name": "/bert/encoder/layer.11/attention/self/Transpose",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op335"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.34e-05
+      }
+    },
+    {
+      "id": "op337",
+      "name": "/bert/encoder/layer.11/attention/self/MatMul/MatMulScaleFusion/",
+      "fx_op": "onnx_node",
+      "target": "FusedMatMul",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op336",
+        "op332"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.716e-05
+      }
+    },
+    {
+      "id": "op338",
+      "name": "/bert/encoder/layer.11/attention/self/Add",
+      "fx_op": "onnx_node",
+      "target": "Add",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op337",
+        "op18"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.268e-05
+      }
+    },
+    {
+      "id": "op339",
+      "name": "/bert/encoder/layer.11/attention/self/Softmax",
+      "fx_op": "onnx_node",
+      "target": "Softmax",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op338"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.652e-05
+      }
+    },
+    {
+      "id": "op340",
+      "name": "gemm_input_reshape_token_404",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op328"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.012e-05
+      }
+    },
+    {
+      "id": "op341",
+      "name": "/bert/encoder/layer.11/attention/self/value/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op340"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00012220000000000002
+      }
+    },
+    {
+      "id": "op342",
+      "name": "gemm_output_reshape_token_407_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op341"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.052e-05
+      }
+    },
+    {
+      "id": "op343",
+      "name": "/bert/encoder/layer.11/attention/self/Transpose_1",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op342"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.352e-05
+      }
+    },
+    {
+      "id": "op344",
+      "name": "/bert/encoder/layer.11/attention/self/MatMul_1",
+      "fx_op": "onnx_node",
+      "target": "MatMul",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op339",
+        "op343"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.732e-05
+      }
+    },
+    {
+      "id": "op345",
+      "name": "/bert/encoder/layer.11/attention/self/Transpose_3",
+      "fx_op": "onnx_node",
+      "target": "Transpose",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op344"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 4.604e-05
+      }
+    },
+    {
+      "id": "op346",
+      "name": "/bert/encoder/layer.11/attention/self/Reshape_3_new_reshape",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op345"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.016e-05
+      }
+    },
+    {
+      "id": "op347",
+      "name": "/bert/encoder/layer.11/attention/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op346"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 3.636e-05
+      }
+    },
+    {
+      "id": "op348",
+      "name": "gemm_output_reshape_token_413",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op347"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0320000000000002e-05
+      }
+    },
+    {
+      "id": "op349",
+      "name": "SkipLayerNormalization_token_459",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op348",
+        "op328"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.396e-05
+      }
+    },
+    {
+      "id": "op350",
+      "name": "gemm_input_reshape_token_416",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op349"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.02e-05
+      }
+    },
+    {
+      "id": "op351",
+      "name": "/bert/encoder/layer.11/intermediate/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op350"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.0002616
+      }
+    },
+    {
+      "id": "op352",
+      "name": "gemm_output_reshape_token_419",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op351"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.0399999999999998e-05
+      }
+    },
+    {
+      "id": "op353",
+      "name": "Gelu_token_436",
+      "fx_op": "onnx_node",
+      "target": "Gelu",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op352"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 5.6880000000000004e-05
+      }
+    },
+    {
+      "id": "op354",
+      "name": "gemm_input_reshape_token_422",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op353"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.016e-05
+      }
+    },
+    {
+      "id": "op355",
+      "name": "/bert/encoder/layer.11/output/dense/MatMul/MatMulAddFusion",
+      "fx_op": "onnx_node",
+      "target": "Gemm",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op354"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 0.00030888
+      }
+    },
+    {
+      "id": "op356",
+      "name": "gemm_output_reshape_token_425",
+      "fx_op": "onnx_node",
+      "target": "Reshape",
+      "device_id": "cpu:0",
+      "dependencies": [
+        "op355"
+      ],
+      "output_tensors": [],
+      "memory_footprint": 0.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "cpu:0": 3.068e-05
+      }
+    },
+    {
+      "id": "op357",
+      "name": "SkipLayerNormalization_token_460",
+      "fx_op": "onnx_node",
+      "target": "SkipLayerNormalization",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op356",
+        "op349"
+      ],
+      "output_tensors": [
+        {
+          "id": "op357_last_hidden_state",
+          "size_bytes": 49152.0,
+          "shape": [
+            1,
+            16,
+            768
+          ]
+        }
+      ],
+      "memory_footprint": 49152.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.48e-05
+      }
+    },
+    {
+      "id": "op358",
+      "name": "/bert/pooler/Gather",
+      "fx_op": "onnx_node",
+      "target": "Gather",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op357"
+      ],
+      "output_tensors": [
+        {
+          "id": "op358_/bert/pooler/Gather_output_0",
+          "size_bytes": 3072.0,
+          "shape": [
+            1,
+            768
+          ]
+        }
+      ],
+      "memory_footprint": 3072.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 2.316e-05
+      }
+    },
+    {
+      "id": "op359",
+      "name": "fused /bert/pooler/dense/Gemm",
+      "fx_op": "onnx_node",
+      "target": "FusedGemm",
+      "device_id": "gpu:0",
+      "dependencies": [
+        "op358"
+      ],
+      "output_tensors": [
+        {
+          "id": "op359_pooler_output",
+          "size_bytes": 3072.0,
+          "shape": [
+            1,
+            768
+          ]
+        }
+      ],
+      "memory_footprint": 3072.0,
+      "persistent_memory": 0.0,
+      "runtime_on_device": {
+        "gpu:0": 5.132e-05
+      }
+    }
+  ]
+}
