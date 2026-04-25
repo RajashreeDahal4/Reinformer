@@ -1,0 +1,47 @@
+{
+  "_comment": "Copy to rl_results.json (same directory). Each method needs 'name' + 'simulation_result' (preferred) or 'placement' (re-simulated) or 'total_runtime' (fallback). Run simulation_result_to_dict(result) from io_api to get the right structure.",
+  "methods": [
+    {
+      "name": "DQN",
+      "placement": {
+        "bert_op_id_0": "gpu:0",
+        "bert_op_id_1": "cpu:0"
+      },
+      "simulation_result": {
+        "status": "OK",
+        "total_runtime": 0.01,
+        "op_timings": {},
+        "device_stats": {
+          "cpu:0": {"busy_time": 0.0},
+          "gpu:0": {"busy_time": 0.0}
+        },
+        "link_stats": {},
+        "error_info": {}
+      },
+      "training_curve": [
+        {"step": 0,     "reward": -0.5},
+        {"step": 10000, "reward": -0.3},
+        {"step": 50000, "reward": -0.15}
+      ]
+    },
+    {
+      "name": "SCOTCH",
+      "placement": {
+        "bert_op_id_0": "gpu:0",
+        "bert_op_id_1": "cpu:0"
+      },
+      "simulation_result": {
+        "status": "OK",
+        "total_runtime": 0.01,
+        "op_timings": {},
+        "device_stats": {
+          "cpu:0": {"busy_time": 0.0},
+          "gpu:0": {"busy_time": 0.0}
+        },
+        "link_stats": {},
+        "error_info": {}
+      },
+      "training_curve": []
+    }
+  ]
+}
